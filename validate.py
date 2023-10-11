@@ -43,7 +43,7 @@ def validateAge(age):
 
 
 def validateGender(g):
-    if g == 'Male' or g == 'Female':
+    if g == 'M' or g == 'F':
         return True
     return False
 
