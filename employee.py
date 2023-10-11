@@ -50,7 +50,8 @@ while True:
     print("5. Press 5 to search the record")
     print("6. Press 6 to display the employee details with highest salary")
     print("7. Press 7 to display the employee details with lowest salary")
-    print("8. Press 8 to exit")
+    print("8. Press 8 to display total salary spent in each department")
+    print("9. Press 8 to exit")
     choice = int(input("Enter your choice: "))
     if choice == 1:
         id = generateEmpID()
@@ -89,10 +90,6 @@ while True:
                 print("Invalid age entered.")
         while True:
             gender = input("Enter 'M' for male or 'F' for female: ")
-            if gender == 'M':
-                gender = 'Male'
-            if gender == 'F':
-                gender == 'Female'
             if (validateGender(gender)):
                 break
             else:
@@ -176,6 +173,7 @@ while True:
         else:
             for i in EmployeeList:
                 i.display()
+        print("")
     elif choice == 3:
         if len(EmployeeList) == 0:
             print("No employee details exists.")
@@ -218,22 +216,31 @@ while True:
                     else:
                         print("Employee with id", inputID, "does not exist.")
                 elif updateChoice == 2:
-                    # 
                     inputID = int(input("Enter the employee id:"))
+                    flag = False
                     for i in EmployeeList:
                         if i.id == inputID:
-                            updatedAddress = input(
-                                "Enter the new employee address: ")
-                            i.address = updatedAddress
-                            print("Address of employee updated.")
+                            flag = True
+                            break
+                    if flag:
+                        updatedAddress = input("Enter the new employee address: ")
+                        i.address = updatedAddress
+                        print("Address of employee updated.")
+                    else:
+                        print("Employee with id", inputID, "does not exist.")
                 elif updateChoice == 3:
                     inputID = int(input("Enter the employee id:"))
+                    flag = False
                     for i in EmployeeList:
                         if i.id == inputID:
-                            updatedDOB = input(
-                                "Enter the new date of birth of the employee: ")
-                            i.dob = updatedDOB
-                            print("Date of birth with employee ID", inputID,"updated.")
+                            flag = True
+                            break
+                    if flag:
+                        updatedDOB = input("Enter the new date of birth of the employee: ")
+                        i.dob = updatedDOB
+                        print("Date of birth with employee ID", inputID,"updated.")
+                    else:
+                        print("Employee with id", inputID, "does not exist.")
                 elif updateChoice == 4:
                     print(
                         "1. Enter 1 to update the salary of specific employee by employee id.")
@@ -244,18 +251,30 @@ while True:
                     updateSalaryChoice = int(input("Enter the option: "))
                     if updateSalaryChoice == 1:
                         inputID = int(input("Enter the employee id: "))
+                        flag = False
                         for i in EmployeeList:
                             if i.id == inputID:
-                                inputSalary = int(input("Enter the salary: "))
-                                i.sal = inputSalary
-                                print("Salary of employee with ID", inputID, "updated.")
+                                flag = True
+                                break
+                        if flag:
+                            inputSalary = int(input("Enter the salary: "))
+                            i.sal = inputSalary
+                            print("Salary of employee with ID", inputID, "updated.")
+                        else:
+                            print("Employee with id", inputID, "does not exist.")
                     elif updateSalaryChoice == 2:
                         inputDept = input("Enter the department: ")
+                        flag = False
                         for i in EmployeeList:
                             if i.dept == inputDept:
-                                inputSalary = int(input("Enter the salary: "))
-                                i.sal = inputSalary
-                                print("Salary of employees with department", inputDept, "updated.")
+                                flag = True
+                                break
+                        if flag:
+                            inputSalary = int(input("Enter the salary: "))
+                            i.sal = inputSalary
+                            print("Salary of employees with department", inputDept, "updated.")
+                        else:
+                            print("Employees with department", inputDept, "do not exist.")
                     elif updateSalaryChoice == 3:
                         inputSalary = int(input("Enter the salary: "))
                         for i in EmployeeList:
@@ -270,6 +289,7 @@ while True:
                     break
                 else:
                     print("Invalid choice")
+            print("")
         print("")
     elif choice == 5:
         if len(EmployeeList) == 0:
@@ -294,25 +314,26 @@ while True:
                         if i.name == inputName:
                             i.display()
                         else:
-                            print("Employee name is invalid.")
+                            print("Employee's name is invalid.")
                 elif searchChoice == 3:
                     inputDept = input("Enter the employee department: ")
                     for i in EmployeeList:
                         if i.dept == inputDept:
                             i.display()
                         else:
-                            print("Employee department is invalid.")
+                            print("Employee's department is invalid.")
                 elif searchChoice == 4:
                     break
                 else:
                     print("Invalid search choice.")
+            print("")
         print("")
     elif choice == 6:
         if len(SalaryList) == 0:
             print("Employee list is empty. Please enter the records in the list.")
         else:
             maxSal = max(SalaryList)
-            print("Details of employees with maximum salary:")
+            print("Details of employees with maximum salary: ")
             for i in EmployeeList:
                 if i.sal == maxSal:
                     i.display()
@@ -322,12 +343,24 @@ while True:
             print("Employee list is empty. Please enter the records in the list.")
         else:
             minSal = min(SalaryList)
-            print("Details of employees with minimum salary:")
+            print("Details of employees with minimum salary: ")
             for i in EmployeeList:
                 if i.sal == minSal:
                     i.display()
         print("")
     elif choice == 8:
+        if len(SalaryList) == 0:
+            print("Employee list is empty. Please enter the records in the list.")
+        else:
+            d = { }
+            for i in EmployeeList:
+                if i.dept in d:
+                    d[i.dept] = d[i.dept] + i.sal
+                else:
+                    d[i.dept] = i.sal
+            print("Total salary spent in each department:", d)
+        print("")
+    elif choice == 9:
         print("Program terminated successfully.")
         break
     else:
